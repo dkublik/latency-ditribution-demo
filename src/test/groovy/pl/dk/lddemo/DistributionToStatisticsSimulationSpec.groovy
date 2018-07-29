@@ -1,4 +1,4 @@
-package pl.dk.micrometersimulation
+package pl.dk.lddemo
 
 import org.HdrHistogram.Histogram
 import spock.lang.Specification

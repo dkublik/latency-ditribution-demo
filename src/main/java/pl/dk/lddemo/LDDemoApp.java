@@ -1,12 +1,14 @@
-package micrometersimulation;
+package pl.dk.lddemo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-public class MicrometerSimulationApp {
+@EnableScheduling
+public class LDDemoApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MicrometerSimulationApp.class, args);
+		SpringApplication.run(LDDemoApp.class, args);
 	}
 }
