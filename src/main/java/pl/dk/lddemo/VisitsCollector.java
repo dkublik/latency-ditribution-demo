@@ -2,6 +2,7 @@ package pl.dk.lddemo;
 
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static pl.dk.lddemo.util.OperationsWithDelay.longOperation;
@@ -10,7 +11,7 @@ import static pl.dk.lddemo.util.OperationsWithDelay.quickOperation;
 @Component
 class VisitsCollector {
 
-    private boolean reportInCreation = false;
+    private AtomicBoolean reportInCreation = new AtomicBoolean(false);
 
     private AtomicInteger visits = new AtomicInteger(0);
 
@@ -21,7 +22,7 @@ class VisitsCollector {
 
     private void waitIfReportInCreation() {
         try {
-            while (reportInCreation) {
+            while (reportInCreation.get()) {
                 Thread.sleep(10);
             }
         } catch (InterruptedException e) {
@@ -30,9 +31,9 @@ class VisitsCollector {
     }
 
     Integer createReport() {
-        reportInCreation = true;
+        reportInCreation.getAndSet(true);
         Integer nrOfVisits = longOperation(() -> visits.getAndSet(0));
-        reportInCreation = false;
+        reportInCreation.getAndSet(false);
         return nrOfVisits;
     }
 }
