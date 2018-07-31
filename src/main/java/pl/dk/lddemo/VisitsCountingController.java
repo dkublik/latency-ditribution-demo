@@ -1,6 +1,7 @@
 package pl.dk.lddemo;
 
-import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.Metrics;
+import io.micrometer.core.instrument.Timer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,14 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 class VisitsCountingController {
 
     private final VisitsCollector visitsCollector;
+    private final Timer visitsTimer;
 
     VisitsCountingController(VisitsCollector visitsCollector) {
         this.visitsCollector = visitsCollector;
+        visitsTimer = Metrics.timer("pl.dk.visits");
     }
 
     @GetMapping
-    @Timed(value = "pl.dk.visit")
     void countVisit() {
-        visitsCollector.addVisit();
+        visitsTimer.record((Runnable) () -> visitsCollector.addVisit());
     }
 }

@@ -16,7 +16,7 @@ class ReportCreator {
         this.visitsCollector = visitsCollector;
     }
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(cron = "0 * * * * ?")
     public void report() {
         Integer numberOfVisits = visitsCollector.createReport();
         logger.info("visits report -> number of visits: {}", numberOfVisits);
