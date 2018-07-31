@@ -4,9 +4,9 @@ import java.util.concurrent.Callable;
 
 public class OperationsWithDelay {
 
-    private static final long SHORT_DELAY_MILLIS = 5;
+    private static final long SHORT_DELAY_MILLIS = 3;
 
-    private static final long LONG_DELAY_MILLIS = 10000;
+    private static final long LONG_DELAY_MILLIS = 5000;
 
     public static <T> T quickOperation(Callable<T> callable) {
         return operationWithDelay(callable, SHORT_DELAY_MILLIS);
